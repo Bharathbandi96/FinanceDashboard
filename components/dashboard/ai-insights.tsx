@@ -107,13 +107,13 @@ export function AIInsightsCard({ insights }: AIInsightsProps) {
             ))
           )}
         </div>
-        {insights.length > 0 && (
+        {/* {insights.length > 0 && (
           <div className="mt-4 pt-4 border-t">
             <Button variant="outline" size="sm" className="w-full">
               View All Recommendations
             </Button>
           </div>
-        )}
+        )} */}
       </CardContent>
     </Card>
   );

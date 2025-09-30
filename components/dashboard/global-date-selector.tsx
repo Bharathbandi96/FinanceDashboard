@@ -86,10 +86,11 @@ export function GlobalDateSelector({ selectedMonth, selectedYear, onMonthChange,
           </div>
 
           {/* Center Section - Main Controls */}
-          <div className="flex items-center gap-4 bg-gray-50 rounded-2xl p-4 border">
+          <div title='Coming Soon'  className="flex items-center gap-4 bg-gray-50 rounded-2xl p-4 border">
             <Button
               variant="ghost"
               size="sm"
+              disabled
               onClick={handlePreviousMonth}
               className="h-10 w-10 p-0 text-gray-600 hover:bg-gray-200 rounded-xl"
             >
@@ -97,7 +98,7 @@ export function GlobalDateSelector({ selectedMonth, selectedYear, onMonthChange,
             </Button>
             
             <div className="flex items-center gap-3">
-              <Select value={selectedMonth.toString()} onValueChange={(value) => onMonthChange(parseInt(value))}>
+              <Select disabled value={selectedMonth.toString()} onValueChange={(value) => onMonthChange(parseInt(value))}>
                 <SelectTrigger className="w-36 bg-white border-gray-300 text-gray-900 focus:ring-blue-500">
                   <SelectValue />
                 </SelectTrigger>
@@ -110,7 +111,7 @@ export function GlobalDateSelector({ selectedMonth, selectedYear, onMonthChange,
                 </SelectContent>
               </Select>
               
-              <Select value={selectedYear.toString()} onValueChange={(value) => onYearChange(parseInt(value))}>
+              <Select disabled value={selectedYear.toString()} onValueChange={(value) => onYearChange(parseInt(value))}>
                 <SelectTrigger className="w-24 bg-white border-gray-300 text-gray-900 focus:ring-blue-500">
                   <SelectValue />
                 </SelectTrigger>
@@ -128,6 +129,7 @@ export function GlobalDateSelector({ selectedMonth, selectedYear, onMonthChange,
               variant="ghost"
               size="sm"
               onClick={handleNextMonth}
+              disabled
               className="h-10 w-10 p-0 text-gray-600 hover:bg-gray-200 rounded-xl"
             >
               <ChevronRight className="h-5 w-5" />

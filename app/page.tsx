@@ -2,12 +2,12 @@
 
 import { useMemo, useCallback } from 'react';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
-import { 
-  addTransaction, 
-  updatePreferences, 
-  setSelectedMonth, 
-  setSelectedYear, 
-  setShowAddTransaction 
+import {
+  addTransaction,
+  updatePreferences,
+  setSelectedMonth,
+  setSelectedYear,
+  setShowAddTransaction
 } from '@/store/slices/financeSlice';
 import { PremiumOverviewCards } from '@/components/dashboard/premium-overview-cards';
 import { ExpenseChart } from '@/components/dashboard/expense-chart';
@@ -29,15 +29,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Transaction, Budget, FinancialSummary, UserPreferences, AIInsight } from '@/types/finance';
 import { generateAIInsights } from '@/lib/ai-insights';
 import { convertCurrency } from '@/lib/currency';
-import { 
-  BarChart3, 
-  TrendingUp, 
-  CreditCard, 
-  RefreshCw, 
-  Calendar, 
-  Brain, 
-  Activity, 
-  PieChart, 
+import {
+  BarChart3,
+  TrendingUp,
+  CreditCard,
+  RefreshCw,
+  Calendar,
+  Brain,
+  Activity,
+  PieChart,
   LineChart,
   DollarSign,
   Target
@@ -45,13 +45,13 @@ import {
 
 export default function Home() {
   const dispatch = useAppDispatch();
-  const { 
-    transactions, 
-    budgets, 
-    preferences, 
-    selectedMonth, 
-    selectedYear, 
-    showAddTransaction 
+  const {
+    transactions,
+    budgets,
+    preferences,
+    selectedMonth,
+    selectedYear,
+    showAddTransaction
   } = useAppSelector((state) => state.finance);
 
   const { summary, insights, filteredSummary } = useMemo(() => {
@@ -59,7 +59,7 @@ export default function Home() {
     const filteredTransactions = transactions.filter(t => {
       const transactionDate = new Date(t.date);
       return transactionDate.getFullYear() === selectedYear &&
-             transactionDate.getMonth() === selectedMonth;
+        transactionDate.getMonth() === selectedMonth;
     });
 
     // Convert all amounts to preferred currency
@@ -67,7 +67,7 @@ export default function Home() {
       ...t,
       amount: convertCurrency(t.amount, t.currency, preferences.preferredCurrency)
     }));
-    
+
     const convertedFilteredTransactions = filteredTransactions.map(t => ({
       ...t,
       amount: convertCurrency(t.amount, t.currency, preferences.preferredCurrency)
@@ -77,25 +77,25 @@ export default function Home() {
     const totalIncome = convertedTransactions
       .filter(t => t.type === 'income')
       .reduce((sum, t) => sum + t.amount, 0);
-    
+
     const totalExpenses = convertedTransactions
       .filter(t => t.type === 'expense')
       .reduce((sum, t) => sum + t.amount, 0);
-    
+
     // Filtered summary (selected month/year)
     const filteredIncome = convertedFilteredTransactions
       .filter(t => t.type === 'income')
       .reduce((sum, t) => sum + t.amount, 0);
-    
+
     const filteredExpenses = convertedFilteredTransactions
       .filter(t => t.type === 'expense')
       .reduce((sum, t) => sum + t.amount, 0);
-    
+
     const netIncome = totalIncome - totalExpenses;
     const filteredNetIncome = filteredIncome - filteredExpenses;
     const savingsRate = totalIncome > 0 ? (netIncome / totalIncome) * 100 : 0;
     const filteredSavingsRate = filteredIncome > 0 ? (filteredNetIncome / filteredIncome) * 100 : 0;
-    
+
     // Calculate monthly average
     const monthlyData = convertedTransactions.reduce((acc, t) => {
       const month = new Date(t.date).toISOString().slice(0, 7);
@@ -104,12 +104,12 @@ export default function Home() {
       else acc[month].expenses += t.amount;
       return acc;
     }, {} as Record<string, { income: number; expenses: number }>);
-    
+
     const months = Object.keys(monthlyData);
-    const monthlyAverage = months.length > 0 
+    const monthlyAverage = months.length > 0
       ? Object.values(monthlyData).reduce((sum, month) => sum + month.expenses, 0) / months.length
       : 0;
-    
+
     const yearlyProjection = monthlyAverage * 12;
 
     const summaryData: FinancialSummary = {
@@ -120,7 +120,7 @@ export default function Home() {
       monthlyAverage,
       yearlyProjection,
     };
-    
+
     const filteredSummaryData: FinancialSummary = {
       totalIncome: filteredIncome,
       totalExpenses: filteredExpenses,
@@ -132,10 +132,10 @@ export default function Home() {
 
     const aiInsights = generateAIInsights(transactions, budgets, preferences.preferredCurrency);
 
-    return { 
-      summary: summaryData, 
-      insights: aiInsights, 
-      filteredSummary: filteredSummaryData 
+    return {
+      summary: summaryData,
+      insights: aiInsights,
+      filteredSummary: filteredSummaryData
     };
   }, [transactions, budgets, preferences.preferredCurrency, selectedMonth, selectedYear]);
 
@@ -150,15 +150,15 @@ export default function Home() {
   const handleUpdatePreferences = (newPreferences: UserPreferences) => {
     dispatch(updatePreferences(newPreferences));
   };
-  
+
   const handleMonthChange = useCallback((month: number) => {
     dispatch(setSelectedMonth(month));
   }, [dispatch]);
-  
+
   const handleYearChange = useCallback((year: number) => {
     dispatch(setSelectedYear(year));
   }, [dispatch]);
-  
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
@@ -171,7 +171,7 @@ export default function Home() {
             Comprehensive financial management with intelligent insights
           </p>
         </div>
-        
+
         {/* Date Selector */}
         <div className="mb-6">
           <GlobalDateSelector
@@ -247,7 +247,7 @@ export default function Home() {
               />
             </div>
           </TabsContent>
-          
+
           <TabsContent value="analytics" className="space-y-6">
             <div className="grid gap-6">
               <AnimatedChartContainer title="Daily Spending Trends" icon={TrendingUp}>
@@ -277,8 +277,8 @@ export default function Home() {
           </TabsContent>
 
           <TabsContent value="budget" className="space-y-6">
-            <BudgetOverview 
-              budgets={budgets} 
+            <BudgetOverview
+              budgets={budgets}
               transactions={transactions}
               selectedMonth={selectedMonth}
               selectedYear={selectedYear}
@@ -293,8 +293,8 @@ export default function Home() {
           </TabsContent>
 
           <TabsContent value="annual" className="space-y-6">
-            <AnnualOverview 
-              transactions={transactions} 
+            <AnnualOverview
+              transactions={transactions}
               preferredCurrency={preferences.preferredCurrency}
             />
           </TabsContent>
@@ -302,7 +302,7 @@ export default function Home() {
           <TabsContent value="insights" className="space-y-6">
             <div className="grid gap-6 lg:grid-cols-2">
               <AIInsightsCard insights={insights} />
-              <UserPreferencesCard 
+              <UserPreferencesCard
                 preferences={preferences}
                 onUpdatePreferences={handleUpdatePreferences}
               />

@@ -102,7 +102,7 @@ export function BudgetOverview({ budgets, transactions, selectedMonth, selectedY
                 </div>
                 <div className="space-y-1">
                   {!isVirtual ? (
-                    <Progress 
+                    <Progress
                       value={Math.min(percentage, 100)} 
                       className="h-2"
                     />

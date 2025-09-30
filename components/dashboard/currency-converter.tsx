@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,7 +15,7 @@ export function CurrencyConverter() {
   const [convertedAmount, setConvertedAmount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleConvert = () => {
+  const handleConvert = useCallback(() => {
     setIsLoading(true);
     setTimeout(() => {
       const numAmount = parseFloat(amount) || 0;
@@ -23,7 +23,7 @@ export function CurrencyConverter() {
       setConvertedAmount(result);
       setIsLoading(false);
     }, 500);
-  };
+  },[amount, fromCurrency, toCurrency]);
 
   const handleSwapCurrencies = () => {
     setFromCurrency(toCurrency);
@@ -34,7 +34,7 @@ export function CurrencyConverter() {
     if (amount) {
       handleConvert();
     }
-  }, [amount, fromCurrency, toCurrency]);
+  }, [amount, fromCurrency, handleConvert, toCurrency]);
 
   return (
     <Card className="hover:shadow-lg transition-shadow duration-300">

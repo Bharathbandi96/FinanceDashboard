@@ -19,17 +19,16 @@ export function FinancialHealthScore({ transactions, budgets, selectedMonth, sel
   // Filter transactions for selected month/year
   const filteredTransactions = transactions.filter(t => {
     const transactionDate = new Date(t.date);
-    return transactionDate.getFullYear() === selectedYear &&
-           transactionDate.getMonth() === selectedMonth;
+    return (transactionDate.getFullYear() === selectedYear) && (transactionDate.getMonth() === selectedMonth);
   });
 
   const income = filteredTransactions
-    .filter(t => t.type === 'income')
-    .reduce((sum, t) => sum + convertCurrency(t.amount, t.currency, preferredCurrency), 0);
+    ?.filter(t => t.type === 'income')
+    ?.reduce((sum, t) => sum + convertCurrency(t.amount, t.currency, preferredCurrency), 0);
 
   const expenses = filteredTransactions
-    .filter(t => t.type === 'expense')
-    .reduce((sum, t) => sum + convertCurrency(t.amount, t.currency, preferredCurrency), 0);
+    ?.filter(t => t.type === 'expense')
+    ?.reduce((sum, t) => sum + convertCurrency(t.amount, t.currency, preferredCurrency), 0);
 
   // Calculate health metrics
   const savingsRate = income > 0 ? ((income - expenses) / income) * 100 : 0;
@@ -81,7 +80,7 @@ export function FinancialHealthScore({ transactions, budgets, selectedMonth, sel
           <div className={`text-4xl font-bold ${getScoreColor(healthScore)} mb-2`}>
             {healthScore}
           </div>
-          <Progress value={healthScore} className="h-3 mb-2" />
+          <Progress value={20} className="h-3 mb-2" />
           <p className="text-sm text-muted-foreground">Overall Financial Health</p>
         </div>
 

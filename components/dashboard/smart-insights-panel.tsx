@@ -3,14 +3,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { Transaction } from '@/types/finance';
 import { convertCurrency, formatCurrency } from '@/lib/currency';
 import { 
   Brain, 
-  TrendingUp, 
-  TrendingDown, 
-  AlertTriangle, 
+  TrendingUp,
   Target, 
   Zap,
   Sparkles,
@@ -140,12 +137,12 @@ export function SmartInsightsPanel({ transactions, selectedMonth, selectedYear, 
           );
         })}
         
-        <div className="pt-4 border-t border-gray-200">
+        {/* <div className="pt-4 border-t border-gray-200">
           <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
             <Zap className="h-4 w-4 mr-2" />
             Get AI Recommendations
           </Button>
-        </div>
+        </div> */}
       </CardContent>
     </Card>
   );
